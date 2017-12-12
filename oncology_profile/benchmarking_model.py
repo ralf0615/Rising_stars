@@ -36,10 +36,14 @@ df2 = pd.read_csv("/Users/yuchenli/Box Sync/Yuchen_project/"
 
     
 def compare_list(listA, listB):
-    result = True
+    import math
+    result_list = list()
     for i in range(len(listA)):
-        result  = result and (listA[i] >= listB[i])
-    return result
+        result_list.append(listA[i]>=listB[i])
+    if result_list.count(True) >= math.floor(0.95 * len(listA)):
+        return True
+    else:
+        return False
 
 def benchmarking(df2, age_cutoff):
     df = df2.copy(deep = True)
@@ -81,14 +85,14 @@ def benchmarking(df2, age_cutoff):
     return df
 
 df_50 = benchmarking(df2, 50) 
-df_45 = benchmarking(df2, 45)
+#df_45 = benchmarking(df2, 45)
        
 df_50.to_csv("/Users/yuchenli/Box Sync/Yuchen_project/"
            "Rising_stars/oncology_profile/Output_data/"
            "Oncology_profile_rising_stars_age_cutoff_50.csv", index = False,
            na_rep = "NA") 
 
-df_45.to_csv("/Users/yuchenli/Box Sync/Yuchen_project/"
-           "Rising_stars/oncology_profile/Output_data/"
-           "Oncology_profile_rising_stars_age_cutoff_45.csv", index = False,
-           na_rep = "NA") 
+#df_45.to_csv("/Users/yuchenli/Box Sync/Yuchen_project/"
+#           "Rising_stars/oncology_profile/Output_data/"
+#           "Oncology_profile_rising_stars_age_cutoff_45.csv", index = False,
+#           na_rep = "NA") 
