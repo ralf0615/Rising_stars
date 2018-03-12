@@ -9,7 +9,12 @@ Created on Mon Sep 11 11:07:09 2017
 """
 import pandas as pd
 
-# Read KOL roster
+# Read KOL roster, pubs_KOL is the product of combining:
+#    TOP_ONCOLOGY_Existing_Data_pt1
+#    TOP_ONCOLOGY_Existing_Data_pt2
+#    TOP_ONCOLOGY_Existing_Data_pt3
+#    TOP_ONCOLOGY_Existing_Data_pt4
+
 KOL_roster = pd.read_csv("/Users/yuchenli/Box Sync/Yuchen_project/"
                          "Truven_rising_stars/oncology_profile/Input_data/"
                          "pubs_KOL.csv", keep_default_na = False, 

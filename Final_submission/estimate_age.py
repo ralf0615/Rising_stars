@@ -1,20 +1,27 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Fri Dec 8 10:00:55 2017
+Created on Mon Mar 12 13:28:48 2018
 
 @author: yuchenli
 @content: estimate physician's age
+@note: replace xxxxxx with your own directory
 """
 
+# Import packages
 import pandas as pd
 import csv
 
-df1 = pd.read_csv("/Users/yuchenli/Box Sync/Yuchen_project/"
-                  "Truven_rising_stars/oncology_profile/Input_data/"
-                  "profile_education.csv")
+# import "profile_education.csv", the file we received has following variables:
+# HBE_ID, Institution_Name, Education_Type, Degree, Honors
+# Start_Date, End_Date, Profile_Education_Code
+df1 = pd.read_csv("xxxxxx/profile_education.csv")
 
 
+# Define degree_undergraduate function that marks a string as True if it is an 
+# undergraduate degree
+# @input: a string, found in "profile_education.csv"
+# @output: a boolean, tells whether the string is a undergraduate degree
 def degree_undergraduate(degree_type):
     if pd.isnull(degree_type):
         return False
@@ -27,6 +34,10 @@ def degree_undergraduate(degree_type):
         return found
     
 
+# Define degree_graduate function that marks a string as True if it is an 
+# graduate degree
+# @input: a string, found in "profile_education.csv"
+# @output: a boolean, tells whether the string is a graduate degree
 def degree_graduate(degree_type):
     if pd.isnull(degree_type):
         return False
@@ -38,18 +49,18 @@ def degree_graduate(degree_type):
             found = found or (element in degree_type)
         return found
     
-   
-j = 0
-null_list = list()
 
+# Construct a dictionary named "year_of_school", 
+# @key: "HBE_ID"
+# @value: "Date", "Date_Type" and "Type"
 
 year_of_school = dict()
 for i in range(len(df1)):
-    HBE_id = df1.iloc[i,0]
-    start_date = df1.iloc[i,6]
-    end_date = df1.iloc[i,7]
-    education_type = df1.iloc[i,3]
-    degree = df1.iloc[i,4]
+    HBE_id = df1.loc[i,"HBE_ID"]
+    start_date = df1.loc[i,"Start_Date"]
+    end_date = df1.loc[i,"End_Date"]
+    education_type = df1.loc[i,"Education_Type"]
+    degree = df1.loc[i,"Degree"]
 
     date_type = 0
     
@@ -117,8 +128,11 @@ for i in range(len(df1)):
                 if int(end_date) < year_of_school[HBE_id]['Date']:
                     year_of_school[HBE_id]['Date'] = int(end_date)
                     year_of_school[HBE_id]['Date_type'] = "End"
-                    
-# Estimate age
+     
+               
+# Estimate age, construct a dictionary named "year_of_birth",
+# @key: "HBE_ID"
+# @value: "Year_of_birth"
 ## +++ for M.D and ### for undergraduate
 year_of_birth = dict()
 for HBE_ID, value in year_of_school.items():
@@ -132,16 +146,12 @@ for HBE_ID, value in year_of_school.items():
         year_of_birth[HBE_ID] = value["Date"] - 22
         
 
-# Write to csv
-with open("/Users/yuchenli/Box Sync/Yuchen_project/"
-          "Truven_rising_stars/oncology_profile/Output_data/"
-          "Oncology_profile_year_of_birth.csv", "w") as csvfile:
+# Write "year_of_birth" to csv
+with open("xxxxxx/Oncology_profile_year_of_birth.csv", "w") as csvfile:
     fieldnames = ['HBE_ID', "Year_of_birth"]
     writer = csv.DictWriter(csvfile, fieldnames = fieldnames)
     writer.writeheader()
     for key, value in year_of_birth.items():
         writer.writerow({'HBE_ID': key, 
-                         "Year_of_birth": value})  
+                         "Year_of_birth": value}) 
 
-                
-    
