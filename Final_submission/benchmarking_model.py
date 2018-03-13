@@ -10,8 +10,9 @@ Created on Mon Mar 12 15:16:13 2018
     step1: order KOL by the number of publication published during their first 
            15 years since first year of publication
     step2: ping down a group of bottom 30% KOL from step1
-    step3: calculate average number of publication published during their first
-           to first 15 years since first year of publication
+    step3: calculate average accumulative number of publication published 
+           during their first to first 15 years since first year of publication
+    step4: result of step3 is the benchmark
 """
 
 # import package
@@ -38,9 +39,7 @@ def compare_list(listA, listB, x):
 
 # import "number_of_publication_1_15.csv", which is the product of 
 # accumulative_number_of_publication.py
-df_1 = pd.read_csv("/Users/yuchenli/Box Sync/Yuchen_project/"
-                  "Rising_stars/oncology_profile/Output_data/"
-                  "number_of_publication_1_15.csv")
+df_1 = pd.read_csv("xxxxxx/number_of_publication_1_15.csv")
 
 # @input: 
 #        df2
@@ -94,7 +93,5 @@ df_50 = benchmarking(df_1, 50)
  
 
 # Write to csv      
-df_50.to_csv("/Users/yuchenli/Box Sync/Yuchen_project/"
-           "Rising_stars/oncology_profile/Output_data/"
-           "Oncology_profile_rising_stars_age_cutoff_50.csv", index = False,
-           na_rep = "NA") 
+df_50.to_csv("xxxxxx/Oncology_profile_rising_stars_age_cutoff_50.csv", 
+             index = False, na_rep = "NA") 

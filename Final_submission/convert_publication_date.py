@@ -6,6 +6,7 @@ Created on Mon Mar 12 10:35:42 2018
 @author: yuchenli
 @content: convert "Publication Date" in Oncology Profiles - Full pubs" to YYYY
           format
+@note: please replace xxxxxx with your own directory
 """
 
 # Import packages
@@ -14,9 +15,7 @@ import pandas as pd
 from dateutil.parser import parse
 
 # Import "Oncology Profiles - Full pubs.csv", name it as df
-df = pd.read_csv('/Users/yuchenli/Box Sync/Yuchen_project/'
-                 'Rising_stars/oncology_profile/Input_data/'
-                 'Oncology Profiles - Full pubs.csv', keep_default_na = False)
+df = pd.read_csv('xxxxxxx/Oncology Profiles - Full pubs.csv', keep_default_na = False)
 
 # Make a copy of df as df_temp
 df_temp = df.copy(deep = True)
@@ -55,6 +54,6 @@ def parse_year(string):
 df_temp['Year'] = df_temp['Publication Date'].map(parse_year)
 
 
-# Save as csv, please replace xxxxxx with your own directory
+# Save as csv
 df_temp.to_csv('xxxxxx/Full_pubs_with_year.csv', sep = ",", 
                encoding = 'utf-8', index = False)
